@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alquiler de Vehículos</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <h1>Alquiler de Vehículos</h1>
+  </header>
+
+  <nav>
+    <button class="tab activo" data-seccion="vehiculos">Vehículos</button>
+    <button class="tab" data-seccion="clientes">Clientes</button>
+    <button class="tab" data-seccion="reservas">Reservas</button>
+    <button class="tab" data-seccion="disponibilidad">Disponibilidad</button>
+    <button class="tab" data-seccion="historial">Historial</button>
+  </nav>
+
+  <main>
+    <div id="aviso" class="aviso oculto"></div>
+
+    <!-- Vehículos -->
+    <section id="vehiculos" class="seccion">
+      <h2>Vehículos</h2>
+      <form id="form-vehiculo">
+        <input type="hidden" id="veh-id">
+        <label>Marca <input type="text" id="veh-marca" required></label>
+        <label>Modelo <input type="text" id="veh-modelo" required></label>
+        <label>Año <input type="number" id="veh-anio" min="1950" max="2100" required></label>
+        <label>Categoría <input type="text" id="veh-categoria" required></label>
+        <label>Estado
+          <select id="veh-estado">
+            <option value="disponible">disponible</option>
+            <option value="alquilado">alquilado</option>
+            <option value="mantenimiento">mantenimiento</option>
+          </select>
+        </label>
+        <div class="botones">
+          <button type="submit" id="veh-guardar">Guardar</button>
+          <button type="button" id="veh-cancelar" class="secundario">Cancelar</button>
+        </div>
+      </form>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Marca</th><th>Modelo</th><th>Año</th><th>Categoría</th><th>Estado</th><th>Acciones</th></tr>
+        </thead>
+        <tbody id="tabla-vehiculos"></tbody>
+      </table>
+    </section>
+
+    <!-- Clientes -->
+    <section id="clientes" class="seccion oculto">
+      <h2>Clientes</h2>
+      <form id="form-cliente">
+        <input type="hidden" id="cli-id">
+        <label>Nombre <input type="text" id="cli-nombre" required></label>
+        <label>Teléfono <input type="text" id="cli-telefono" required></label>
+        <label>Correo <input type="email" id="cli-correo" required></label>
+        <label>Número de licencia <input type="text" id="cli-licencia" required></label>
+        <div class="botones">
+          <button type="submit" id="cli-guardar">Guardar</button>
+          <button type="button" id="cli-cancelar" class="secundario">Cancelar</button>
+        </div>
+      </form>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Nombre</th><th>Teléfono</th><th>Correo</th><th>Licencia</th><th>Acciones</th></tr>
+        </thead>
+        <tbody id="tabla-clientes"></tbody>
+      </table>
+    </section>
+
+    <!-- Reservas -->
+    <section id="reservas" class="seccion oculto">
+      <h2>Reservas</h2>
+      <form id="form-reserva">
+        <label>Cliente <select id="res-cliente" required></select></label>
+        <label>Vehículo <select id="res-vehiculo" required></select></label>
+        <label>Fecha inicio <input type="date" id="res-inicio" required></label>
+        <label>Fecha fin <input type="date" id="res-fin" required></label>
+        <div class="botones">
+          <button type="submit">Reservar</button>
+        </div>
+      </form>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Cliente</th><th>Vehículo</th><th>Inicio</th><th>Fin</th><th>Estado</th><th>Acciones</th></tr>
+        </thead>
+        <tbody id="tabla-reservas"></tbody>
+      </table>
+    </section>
+
+    <!-- Disponibilidad -->
+    <section id="disponibilidad" class="seccion oculto">
+      <h2>Disponibilidad</h2>
+      <div class="fila">
+        <label>Fecha <input type="date" id="disp-fecha"></label>
+        <button id="disp-consultar">Consultar</button>
+      </div>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Marca</th><th>Modelo</th><th>Año</th><th>Categoría</th><th>Estado</th></tr>
+        </thead>
+        <tbody id="tabla-disponibles"></tbody>
+      </table>
+    </section>
+
+    <!-- Historial -->
+    <section id="historial" class="seccion oculto">
+      <h2>Historial</h2>
+      <div class="fila">
+        <label>Filtrar por
+          <select id="hist-tipo">
+            <option value="cliente">Cliente</option>
+            <option value="vehiculo">Vehículo</option>
+          </select>
+        </label>
+        <label>Elemento <select id="hist-elemento"></select></label>
+      </div>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Cliente</th><th>Vehículo</th><th>Inicio</th><th>Fin</th><th>Estado</th></tr>
+        </thead>
+        <tbody id="tabla-historial"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

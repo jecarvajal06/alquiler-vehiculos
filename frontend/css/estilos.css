@@ -1,0 +1,199 @@
+:root {
+  --color-principal: #1f4e79;
+  --color-principal-oscuro: #163a5a;
+  --color-fondo: #f3f5f8;
+  --color-blanco: #ffffff;
+  --color-texto: #222222;
+  --color-borde: #d0d6dd;
+  --color-gris: #6c757d;
+  --color-verde: #2e8b57;
+  --color-amarillo: #d9a400;
+  --color-rojo: #c0392b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+header {
+  background: var(--color-principal);
+  color: var(--color-blanco);
+  padding: 16px 24px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+nav {
+  display: flex;
+  gap: 4px;
+  background: var(--color-principal-oscuro);
+  padding: 0 24px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  background: none;
+  border: none;
+  color: var(--color-blanco);
+  padding: 12px 18px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.tab:hover {
+  background: var(--color-principal);
+}
+
+.tab.activo {
+  background: var(--color-fondo);
+  color: var(--color-principal);
+  font-weight: bold;
+}
+
+main {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+.seccion {
+  background: var(--color-blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: 6px;
+  padding: 20px;
+}
+
+h2 {
+  margin-top: 0;
+  color: var(--color-principal);
+}
+
+.oculto {
+  display: none;
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  gap: 4px;
+}
+
+input, select {
+  padding: 8px;
+  border: 1px solid var(--color-borde);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+button {
+  background: var(--color-principal);
+  color: var(--color-blanco);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background: var(--color-principal-oscuro);
+}
+
+button.secundario {
+  background: var(--color-gris);
+}
+
+button.peligro {
+  background: var(--color-rojo);
+}
+
+button.aviso-btn {
+  background: var(--color-amarillo);
+}
+
+.botones, .fila {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.fila {
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th, td {
+  border-bottom: 1px solid var(--color-borde);
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background: var(--color-fondo);
+}
+
+td button {
+  margin-right: 4px;
+}
+
+.etiqueta {
+  padding: 3px 8px;
+  border-radius: 10px;
+  color: var(--color-blanco);
+  font-size: 12px;
+}
+
+.disponible, .activa, .devuelta {
+  background: var(--color-verde);
+}
+
+.alquilado {
+  background: var(--color-rojo);
+}
+
+.mantenimiento {
+  background: var(--color-amarillo);
+}
+
+.cancelada {
+  background: var(--color-gris);
+}
+
+.aviso {
+  padding: 10px 14px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+  color: var(--color-blanco);
+}
+
+.aviso.error {
+  background: var(--color-rojo);
+}
+
+.aviso.ok {
+  background: var(--color-verde);
+}
