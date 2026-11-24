@@ -1,6 +1,18 @@
 <?php
 // servicio de clientes (puerto 8002)
-require 'conexion.php';
+require __DIR__ . '/vendor/autoload.php';
+
+use Clientes\BaseDatos;
+use Clientes\Respuesta;
+
+Respuesta::cabeceras();
+$pdo = BaseDatos::conectar();
+
+$metodo = $_SERVER['REQUEST_METHOD'];
+$datos = json_decode(file_get_contents('php://input'), true);
+if (!is_array($datos)) {
+    $datos = [];
+}
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
@@ -10,10 +22,10 @@ try {
             $st = $pdo->prepare('SELECT * FROM clientes WHERE id = ?');
             $st->execute([$id]);
             $c = $st->fetch();
-            if (!$c) error('Cliente no encontrado', 404);
-            responder($c);
+            if (!$c) Respuesta::error('Cliente no encontrado', 404);
+            Respuesta::json($c);
         }
-        responder($pdo->query('SELECT * FROM clientes ORDER BY id')->fetchAll());
+        Respuesta::json($pdo->query('SELECT * FROM clientes ORDER BY id')->fetchAll());
     }
 
     if ($metodo === 'POST' || $metodo === 'PUT') {
@@ -21,33 +33,33 @@ try {
         $telefono = $datos['telefono'] ?? null;
         $correo = $datos['correo'] ?? null;
         $licencia = $datos['numero_licencia'] ?? null;
-        if ($nombre === '') error('El nombre es obligatorio');
+        if ($nombre === '') Respuesta::error('El nombre es obligatorio');
         if ($metodo === 'POST') {
             $st = $pdo->prepare('INSERT INTO clientes (nombre, telefono, correo, numero_licencia) VALUES (?, ?, ?, ?)');
             $st->execute([$nombre, $telefono, $correo, $licencia]);
-            responder(['id' => (int)$pdo->lastInsertId(), 'mensaje' => 'Cliente creado'], 201);
+            Respuesta::json(['id' => (int)$pdo->lastInsertId(), 'mensaje' => 'Cliente creado'], 201);
         }
-        if (!$id) error('Falta el id');
+        if (!$id) Respuesta::error('Falta el id');
         $st = $pdo->prepare('SELECT id FROM clientes WHERE id = ?');
         $st->execute([$id]);
-        if (!$st->fetch()) error('Cliente no encontrado', 404);
+        if (!$st->fetch()) Respuesta::error('Cliente no encontrado', 404);
         $st = $pdo->prepare('UPDATE clientes SET nombre = ?, telefono = ?, correo = ?, numero_licencia = ? WHERE id = ?');
         $st->execute([$nombre, $telefono, $correo, $licencia, $id]);
-        responder(['mensaje' => 'Cliente actualizado']);
+        Respuesta::json(['mensaje' => 'Cliente actualizado']);
     }
 
     if ($metodo === 'DELETE') {
-        if (!$id) error('Falta el id');
+        if (!$id) Respuesta::error('Falta el id');
         $st = $pdo->prepare('SELECT COUNT(*) FROM reservas WHERE cliente_id = ?');
         $st->execute([$id]);
-        if ($st->fetchColumn() > 0) error('No se puede borrar, tiene reservas', 409);
+        if ($st->fetchColumn() > 0) Respuesta::error('No se puede borrar, tiene reservas', 409);
         $st = $pdo->prepare('DELETE FROM clientes WHERE id = ?');
         $st->execute([$id]);
-        if ($st->rowCount() === 0) error('Cliente no encontrado', 404);
-        responder(['mensaje' => 'Cliente borrado']);
+        if ($st->rowCount() === 0) Respuesta::error('Cliente no encontrado', 404);
+        Respuesta::json(['mensaje' => 'Cliente borrado']);
     }
 
-    error('Metodo no permitido', 405);
+    Respuesta::error('Metodo no permitido', 405);
 } catch (PDOException $e) {
-    error('Error en la base de datos', 500);
+    Respuesta::error('Error en la base de datos', 500);
 }

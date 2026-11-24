@@ -12,8 +12,16 @@ Hecha en PHP con microservicios y un frontend en HTML, CSS y JavaScript.
 ## Como correrlo
 
 1. Importar `database/alquiler_vehiculos_db.sql` en MySQL.
-2. Si el usuario o la clave de MySQL no son root sin clave, cambiarlos en el `conexion.php` de cada servicio.
-3. Levantar cada servicio en una terminal:
+2. En cada servicio (vehiculos, clientes y reservas) instalar las dependencias con Composer y crear el `.env`:
+
+```
+cd servicio-vehiculos
+composer install
+cp .env.example .env
+```
+
+3. Si el usuario o la clave de MySQL no son root sin clave, cambiarlos en el `.env` de cada servicio.
+4. Levantar cada servicio en una terminal:
 
 ```
 php -S localhost:8001 -t servicio-vehiculos
@@ -22,4 +30,4 @@ php -S localhost:8003 -t servicio-reservas
 php -S localhost:8000 -t frontend
 ```
 
-4. Abrir http://localhost:8000
+5. Abrir http://localhost:8000

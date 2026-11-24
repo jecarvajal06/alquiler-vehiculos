@@ -1,0 +1,14 @@
+{
+    "name": "jecarvajal06/servicio-clientes",
+    "description": "Microservicio de clientes del gestor de alquiler de vehiculos",
+    "type": "project",
+    "require": {
+        "php": ">=8.0",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Clientes\\": "src/"
+        }
+    }
+}
